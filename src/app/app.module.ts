@@ -4,6 +4,7 @@ import { FormsModule }   from '@angular/forms'; // <-- NgModel lives here
 import { HttpModule } from '@angular/http';
 
 import { RouterModule } from '@angular/router';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';  //<-- 引入该模块解决线上刷新404问题
 
 // Imports for loading & configuring the in-memory web api
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
@@ -34,7 +35,10 @@ import { AppRoutingModule } from './app-routing.modules';
     HeroDetailComponent,
     HeroSearchComponent
   ],
-  providers: [ HeroService ],
+  providers: [
+    HeroService,
+    {provide: LocationStrategy, useClass: HashLocationStrategy}  //<-- 引入模块同时加上这句，解决浏览器刷新问题
+  ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
